@@ -22,25 +22,22 @@ var targetLocation = "pixabay" + suffix;
 //var searchURL = "https://pixabay.com/api/?key=" + APIKEY;
 //	searchURL += "&q=monsters&image_type=photo";
 
-getNewImage(showURL);
+getNewImage(//showURL
 
-function showURL() {
-	console.log("second: " + testURL);
-}
-
-/*
-// use function from StackOverflow and use callback to post the data when
-// I have it.
-download(testURL, targetLocation, function(){
-  //console.log('done');
+	// use function from StackOverflow and use callback to post the data when
+	// I have it.
+	function () {
+		download(testURL, targetLocation, function(){
+		  //console.log('done');
 	
-	var data = require('fs').readFileSync(targetLocation);
+			var data = require('fs').readFileSync(targetLocation);
 
-	// Make post request on media endpoint. Pass file data as media parameter
-	PostToTwitter('media/upload', {media: data})
+			// Make post request on media endpoint. Pass file data as media parameter
+			PostToTwitter('media/upload', {media: data})
 	
-});
-*/
+		});
+	}
+);
 
 // FUNCTIONS
 
@@ -72,7 +69,7 @@ function PostToTwitter(type, contents){
 
 			// Lets tweet it
 			var status = {
-			  status: 'Another test post of pixabay image',
+			  status: 'Here\'s a random pixabay image!',
 			  media_ids: media.media_id_string // Pass the media id string
 			}
 
