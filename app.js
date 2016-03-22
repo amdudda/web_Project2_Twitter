@@ -25,7 +25,7 @@ var targetLocation = "pixabay" + suffix;
 getNewImage(showURL);
 
 function showURL() {
-	console.log(testURL);
+	console.log("second: " + testURL);
 }
 
 /*
@@ -88,6 +88,8 @@ function PostToTwitter(type, contents){
 }
 
 // a function to fetch an image
+// modelled this on the download function and the info at this URL:
+// http://stackoverflow.com/questions/2190850/create-a-custom-callback-in-javascript
 
 function getNewImage(callback) {
 	// the function uses these variables
@@ -115,7 +117,7 @@ function getNewImage(callback) {
 	
 				// change testURL to the new image
 				testURL = imageURL;
-				console.log(testURL);
+				console.log("first:" + testURL);
 				// also credit the user who uploaded the image
 /*				var userName = imageJSON.user;
 				var userID = imageJSON.user_id;
@@ -124,6 +126,7 @@ function getNewImage(callback) {
 				creditString += "<a href='" + profileURL + "'>" + userName + "</a>.";
 				$("#userCredit").html(creditString);
 */		
+				callback();
 			}
 			else {
 			    console.log('No hits');
