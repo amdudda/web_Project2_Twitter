@@ -17,12 +17,13 @@ var client = new Twitter({
 
 var testURL = "https://pixabay.com/static/uploads/photo/2015/10/08/14/20/street-art-977790_150.jpg";
 //var lengthOfURL = testURL.length;
-var suffix = "." + testURL.substring(testURL.lastIndexOf("."));
+var suffix = testURL.substring(testURL.lastIndexOf("."));
 var targetLocation = "pixabay" + suffix;
 //var searchURL = "https://pixabay.com/api/?key=" + APIKEY;
 //	searchURL += "&q=monsters&image_type=photo";
+var creditstring = "";
 
-getNewImage(//showURL
+getNewImage(
 
 	// use function from StackOverflow and use callback to post the data when
 	// I have it.
@@ -30,6 +31,9 @@ getNewImage(//showURL
 		download(testURL, targetLocation, function(){
 		  //console.log('done');
 	
+			suffix = testURL.substring(testURL.lastIndexOf("."));
+			targetLocation = "pixabay" + suffix;
+
 			var data = require('fs').readFileSync(targetLocation);
 
 			// Make post request on media endpoint. Pass file data as media parameter
@@ -65,17 +69,18 @@ function PostToTwitter(type, contents){
 		  if (!error) {
 
 			// If successful, a media object will be returned.
-			//console.log(media);
+			console.log(creditstring);
 
 			// Lets tweet it
 			var status = {
-			  status: 'Here\'s a random pixabay image!',
+			  status: creditstring + " (test)", //'Here\'s a random pixabay image!',
 			  media_ids: media.media_id_string // Pass the media id string
 			}
 
 			client.post('statuses/update', status, function(error, tweet, response){
 			  if (!error) {
-				console.log(tweet);
+				console.log("success!");
+				//console.log(tweet);
 			  }
 			});
 
@@ -116,11 +121,11 @@ function getNewImage(callback) {
 				testURL = imageURL;
 				console.log("first:" + testURL);
 				// also credit the user who uploaded the image
-/*				var userName = imageJSON.user;
+				var userName = imageJSON.user;
 				var userID = imageJSON.user_id;
 				var profileURL = "https://pixabay.com/en/users/" + userName + "-" + userID;
-				var creditString = "Uploaded by Pixabay user "
-				creditString += "<a href='" + profileURL + "'>" + userName + "</a>.";
+				creditString = "Uploaded by Pixabay user " + userName + "."
+/*				creditString += "<a href='" + profileURL + "'>" + userName + "</a>.";
 				$("#userCredit").html(creditString);
 */		
 				callback();
