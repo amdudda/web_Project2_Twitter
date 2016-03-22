@@ -119,7 +119,7 @@ function getNewImage(callback) {
 	
 				// change testURL to the new image
 				testURL = imageURL;
-				console.log("first:" + testURL);
+				//console.log("first:" + testURL);
 				// also credit the user who uploaded the image
 				var userName = imageJSON.user;
 				var userID = imageJSON.user_id;
