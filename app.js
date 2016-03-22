@@ -2,6 +2,7 @@
 var Twitter = require('twitter');
 var fs = require('fs');
 var request = require('request');
+
  
 var client = new Twitter({
   consumer_key: process.env.TWIT_CONSUMER_KEY,
@@ -18,7 +19,16 @@ var testURL = "https://pixabay.com/static/uploads/photo/2015/10/08/14/20/street-
 //var lengthOfURL = testURL.length;
 var suffix = "." + testURL.substring(testURL.lastIndexOf("."));
 var targetLocation = "pixabay" + suffix;
+//var searchURL = "https://pixabay.com/api/?key=" + APIKEY;
+//	searchURL += "&q=monsters&image_type=photo";
 
+getNewImage(showURL);
+
+function showURL() {
+	console.log(testURL);
+}
+
+/*
 // use function from StackOverflow and use callback to post the data when
 // I have it.
 download(testURL, targetLocation, function(){
@@ -30,7 +40,7 @@ download(testURL, targetLocation, function(){
 	PostToTwitter('media/upload', {media: data})
 	
 });
-
+*/
 
 // FUNCTIONS
 
@@ -75,4 +85,54 @@ function PostToTwitter(type, contents){
 		  }
 		});
 
+}
+
+// a function to fetch an image
+
+function getNewImage(callback) {
+	// the function uses these variables
+	var PIXABAY_KEY = process.env.PIXABAY_API_KEY
+	var searchURL = "https://pixabay.com/api/";
+	var searchParams = { 'key': PIXABAY_KEY, 'q':'monsters', 'image_type': 'photo' };
+
+	request( {uri: searchURL, qs: searchParams}, function(error,clresponse,body){
+		if (!error) {
+			// try to get our data
+			// let's make sure we get clean JSON data so we don't run maliciously injected code.
+			//var myData = JSON.stringify(body);
+			// console.log(myData);
+			var myData = JSON.parse(body);
+			//console.log(myData.totalHits + " hits");
+			
+			if (parseInt(myData.totalHits) > 0) {
+				var arraySize = myData.hits.length;
+
+				// get a random integer between zero and length-1
+				var indexToUse = Math.floor(Math.random() * arraySize);
+				// grab the image associated with that index
+				var imageJSON = myData.hits[indexToUse]
+				var imageURL = imageJSON.previewURL;
+	
+				// change testURL to the new image
+				testURL = imageURL;
+				console.log(testURL);
+				// also credit the user who uploaded the image
+/*				var userName = imageJSON.user;
+				var userID = imageJSON.user_id;
+				var profileURL = "https://pixabay.com/en/users/" + userName + "-" + userID;
+				var creditString = "Uploaded by Pixabay user "
+				creditString += "<a href='" + profileURL + "'>" + userName + "</a>.";
+				$("#userCredit").html(creditString);
+*/		
+			}
+			else {
+			    console.log('No hits');
+			}
+		}
+		else
+		{
+			console.log("Something broke!\n" + error);
+		}
+
+	});
 }
