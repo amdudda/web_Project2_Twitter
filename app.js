@@ -21,7 +21,7 @@ var suffix = testURL.substring(testURL.lastIndexOf("."));
 var targetLocation = "pixabay" + suffix;
 //var searchURL = "https://pixabay.com/api/?key=" + APIKEY;
 //	searchURL += "&q=monsters&image_type=photo";
-var creditstring = "";
+var creditString = "";
 
 getNewImage(
 
@@ -69,11 +69,11 @@ function PostToTwitter(type, contents){
 		  if (!error) {
 
 			// If successful, a media object will be returned.
-			console.log(creditstring);
+			console.log(creditString);
 
 			// Lets tweet it
 			var status = {
-			  status: creditstring + " (test)", //'Here\'s a random pixabay image!',
+			  status: creditString + " (test)", //'Here\'s a random pixabay image!',
 			  media_ids: media.media_id_string // Pass the media id string
 			}
 
@@ -124,9 +124,9 @@ function getNewImage(callback) {
 				var userName = imageJSON.user;
 				var userID = imageJSON.user_id;
 				var profileURL = "https://pixabay.com/en/users/" + userName + "-" + userID;
-				creditString = "Uploaded by Pixabay user " + userName + "."
-/*				creditString += "<a href='" + profileURL + "'>" + userName + "</a>.";
-				$("#userCredit").html(creditString);
+				creditString = "Uploaded by Pixabay user "; + userName + "."
+				creditString += "<a href='" + profileURL + "'>" + userName + "</a>.";
+/*				$("#userCredit").html(creditString);
 */		
 				callback();
 			}
