@@ -12,15 +12,10 @@ var client = new Twitter({
 });
  
 
-//can we post an image?
-// Load your image
-
-var testURL = "https://pixabay.com/static/uploads/photo/2015/10/08/14/20/street-art-977790_150.jpg";
-//var lengthOfURL = testURL.length;
-var suffix = testURL.substring(testURL.lastIndexOf("."));
-var targetLocation = "pixabay" + suffix;
-//var searchURL = "https://pixabay.com/api/?key=" + APIKEY;
-//	searchURL += "&q=monsters&image_type=photo";
+// some global variables
+var testURL = "";
+var suffix = "";
+var targetLocation = "";
 var creditString = "";
 
 getNewImage(
@@ -28,11 +23,12 @@ getNewImage(
 	// use function from StackOverflow and use callback to post the data when
 	// I have it.
 	function () {
-		download(testURL, targetLocation, function(){
-		  //console.log('done');
-	
+			// need to decide where to save the image.
+			// NB: not cleaning this up, so that it can be grabbed and used if I set up an info page.
 			suffix = testURL.substring(testURL.lastIndexOf("."));
 			targetLocation = "pixabay" + suffix;
+		download(testURL, targetLocation, function(){
+			
 
 			var data = require('fs').readFileSync(targetLocation);
 
@@ -73,7 +69,7 @@ function PostToTwitter(type, contents){
 
 			// Lets tweet it
 			var status = {
-			  status: creditString + " (test)", //'Here\'s a random pixabay image!',
+			  status: creditString, // generated when the image was selected,
 			  media_ids: media.media_id_string // Pass the media id string
 			}
 
@@ -102,11 +98,8 @@ function getNewImage(callback) {
 	request( {uri: searchURL, qs: searchParams}, function(error,clresponse,body){
 		if (!error) {
 			// try to get our data
-			// let's make sure we get clean JSON data so we don't run maliciously injected code.
-			//var myData = JSON.stringify(body);
-			// console.log(myData);
+			// let's make a token attempt to ensure we get clean JSON data so we don't run maliciously injected code.
 			var myData = JSON.parse(body);
-			//console.log(myData.totalHits + " hits");
 			
 			if (parseInt(myData.totalHits) > 0) {
 				var arraySize = myData.hits.length;
@@ -115,19 +108,17 @@ function getNewImage(callback) {
 				var indexToUse = Math.floor(Math.random() * arraySize);
 				// grab the image associated with that index
 				var imageJSON = myData.hits[indexToUse]
-				var imageURL = imageJSON.previewURL;
-	
-				// change testURL to the new image
-				testURL = imageURL;
-				//console.log("first:" + testURL);
+				testURL = imageJSON.previewURL;
+
 				// also credit the user who uploaded the image
 				var userName = imageJSON.user;
-				var userID = imageJSON.user_id;
-				var profileURL = "https://pixabay.com/en/users/" + userName + "-" + userID;
-				creditString = "Uploaded by Pixabay user "; + userName + "."
-				creditString += "<a href='" + profileURL + "'>" + userName + "</a>.";
-/*				$("#userCredit").html(creditString);
-*/		
+				//var userID = imageJSON.user_id;
+				var fullSizeImageUrl = imageJSON.webformatURL;
+				//var profileURL = "https://pixabay.com/en/users/" + userName + "-" + userID;
+				creditString = "Uploaded by Pixabay user " + userName + ".  "
+				creditString += "Full size image at: " + fullSizeImageUrl;
+
+				// and here's where we do the callback function - we don't want to bother with callback if there are any errors.
 				callback();
 			}
 			else {
