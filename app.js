@@ -79,7 +79,8 @@ function PostToTwitter(type, contents){
 
 			client.post('statuses/update', status, function(error, tweet, response){
 			  if (!error) {
-				console.log("success!");
+				var currentTimestamp = new Date();
+				console.log("Posted image at" + currentTimestamp + "!");
 				//console.log(tweet);
 			  }
 			});
