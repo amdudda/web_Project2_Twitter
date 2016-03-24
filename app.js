@@ -20,18 +20,21 @@ var creditString = "";
 var fiveMinutes = 5 * 60 * 1000;
 var twelveHours = 12 * 60 * 60 * 1000;
 
-setInterval(
+setInterval(getAndPost, fiveMinutes);
+
+function getAndPost() {
 	getNewImage(
 
 		// use function from StackOverflow and use callback to post the data when
 		// I have it.
 		function () {
-				// need to decide where to save the image.
-				// NB: not cleaning this up, so that it can be grabbed and used if I set up an info page.
-				suffix = testURL.substring(testURL.lastIndexOf("."));
-				targetLocation = "pixabay" + suffix;
+			// need to decide where to save the image.
+			// NB: not cleaning this up, so that it can be grabbed and used if I set up an info page.
+			suffix = testURL.substring(testURL.lastIndexOf("."));
+			targetLocation = "pixabay" + suffix;
+
+			// download image and save to target location
 			download(testURL, targetLocation, function(){
-			
 
 				var data = require('fs').readFileSync(targetLocation);
 
@@ -41,7 +44,7 @@ setInterval(
 			});
 		}
 	);
-, fiveMinutes);
+}
 
 // FUNCTIONS
 
