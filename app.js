@@ -106,7 +106,7 @@ function PostToTwitter(type, contents){
 		  if (!error) {
 
 			// If successful, a media object will be returned.
-			console.log(creditString);
+			//console.log(creditString);
 
 			// Lets tweet it
 			var status = {
@@ -117,7 +117,7 @@ function PostToTwitter(type, contents){
 			client.post('statuses/update', status, function(error, tweet, response){
 			  if (!error) {
 				var currentTimestamp = new Date();
-				console.log("Posted image at" + currentTimestamp + "!");
+				console.log("Posted image at " + currentTimestamp + "!");
 				//console.log(tweet);
 			  }
 			});
