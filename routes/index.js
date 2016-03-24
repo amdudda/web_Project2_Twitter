@@ -6,8 +6,8 @@ var router = express.Router();
 router.get('/',indexpage);
 
 function indexpage(req, res) {
-// this code passes variables to index.jade
-	console.log(req);
+	// this code passes variables to index.jade
+	//console.log(req.body);
 	res.render('index',{'image':'pixabay.jpg'});
 }
 

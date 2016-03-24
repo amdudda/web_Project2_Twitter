@@ -17,7 +17,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 // and tell it where our static resources (eg stylesheets or images) live
-//app.use(express.static(path.join(__dirname, "static")));
+app.use(express.static(path.join(__dirname, "static")));
 
 /* And this is what we want the server to do once it fires up the listener */
 app.listen(port, function() {
@@ -25,7 +25,6 @@ app.listen(port, function() {
 });
 
 app.use('/', routes);  // home page
-// app.use('/about', about);  // about page
 
 module.exports = app;
 
