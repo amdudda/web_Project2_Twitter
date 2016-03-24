@@ -17,27 +17,31 @@ var testURL = "";
 var suffix = "";
 var targetLocation = "";
 var creditString = "";
+var fiveMinutes = 5 * 60 * 1000;
+var twelveHours = 12 * 60 * 60 * 1000;
 
-getNewImage(
+setInterval(
+	getNewImage(
 
-	// use function from StackOverflow and use callback to post the data when
-	// I have it.
-	function () {
-			// need to decide where to save the image.
-			// NB: not cleaning this up, so that it can be grabbed and used if I set up an info page.
-			suffix = testURL.substring(testURL.lastIndexOf("."));
-			targetLocation = "pixabay" + suffix;
-		download(testURL, targetLocation, function(){
+		// use function from StackOverflow and use callback to post the data when
+		// I have it.
+		function () {
+				// need to decide where to save the image.
+				// NB: not cleaning this up, so that it can be grabbed and used if I set up an info page.
+				suffix = testURL.substring(testURL.lastIndexOf("."));
+				targetLocation = "pixabay" + suffix;
+			download(testURL, targetLocation, function(){
 			
 
-			var data = require('fs').readFileSync(targetLocation);
+				var data = require('fs').readFileSync(targetLocation);
 
-			// Make post request on media endpoint. Pass file data as media parameter
-			PostToTwitter('media/upload', {media: data})
+				// Make post request on media endpoint. Pass file data as media parameter
+				PostToTwitter('media/upload', {media: data})
 	
-		});
-	}
-);
+			});
+		}
+	);
+, fiveMinutes);
 
 // FUNCTIONS
 
