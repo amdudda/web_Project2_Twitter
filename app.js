@@ -65,7 +65,7 @@ function getAndPost() {
 			// need to decide where to save the image.
 			// NB: not cleaning this up, so that it can be grabbed and used if I set up an info page.
 			suffix = testURL.substring(testURL.lastIndexOf("."));
-			targetLocation = "pixabay" + suffix;
+			targetLocation = "static/pixabay" + suffix;
 
 			// download image and save to target location
 			download(testURL, targetLocation, function(){
