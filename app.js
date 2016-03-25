@@ -26,22 +26,7 @@ app.listen(port, function() {
 
 app.use('/', routes);  // home page
 
-//THIS LISTENS TO THE PORT AND SERVES THE HOMEPAGE
-//I've included it here instead of as a separate file so I can pass the current image's file name to index.jade (because it could be .gif, .jpg, .png...)
-var express = require("express");
-var router = express.Router();
-var imageFileName = "pixabay.jpg";  // the vast majority of files seem to be .jpg, so use that as a default assumption in case program needs restarted
-
-/* GET the app's home page */
-router.get('/',indexpage);
-
-function indexpage(req, res) {
-	// this code passes variables to index.jade
-	//console.log(req.body);
-	res.render('index',userData);
-}
-
-module.exports = router;
+module.exports = app;
 
 
 /*
@@ -67,11 +52,11 @@ var testURL = "";
 var suffix = "";
 var targetLocation = "";
 var creditString = "";
-var userData = { 'image':imageFileName } //, 'profileUrl':'http://minneapolis.edu' };
+var userData = ""; 
 var fiveMinutes = 5 * 60 * 1000;
 var twelveHours = 12 * 60 * 60 * 1000;
 
-setInterval(getAndPost, fiveMinutes);
+setInterval(getAndPost, twelveHours);
 
 function getAndPost() {
 	getNewImage(
