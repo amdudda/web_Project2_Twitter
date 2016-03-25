@@ -180,7 +180,15 @@ function getNewImage(callback) {
 				
 				//create some JSON attributes I can pass to the web page
 				userData = { 'image':imageFileName, 'profileUrl':profileURL, 'fullImageUrl':fullSizeImageUrl, 'userName':userName };
-				console.log(userData);
+				//console.log(userData);
+				//write the data to a js file so it's persistent across reboots
+				// used http://www.c-sharpcorner.com/UploadFile/dacca2/node-js-in-action-create-simple-text-file-in-node-js-using/ as a guide
+				var dataToWrite = "var userData=" + JSON.stringify(userData);
+				fs.writeFile('static/javascripts/userData.js',dataToWrite, function (err) {
+							if (err) throw err;
+							console.log('Saved latest userdata.'); 
+					});
+
 				// and here's where we do the callback function - we don't want to bother with callback if there are any errors.
 				callback();
 			}
