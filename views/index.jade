@@ -7,7 +7,13 @@ html
 		h1 We Got Monsters!
 		p Welcome to the We Got Monsters homepage.
 		p This site checks Pixabay twice a day for images tagged "monsters", selects a random image, and posts it to Twitter.  The most recently tweeted image is shown below.
-		// eventually a variable will be passed in case the image is ever not a jpg.
-		img(src="#{image}")
-
+		// why does this not work?  I don't want random blanks if the info is not available!  most jade docs imply this or "locals.profileUrl" should work...
+		if (profileUrl)		
+			a(href="#{fullImageUrl}")
+				img(src="#{image}")
+			p Created by Pixabay user 
+				a(href="#{profileUrl}") #{userName}
+		else
+			img(src="#{image}")
+			p The server has been rebooted and I have lost the information to credit the creator of this image.
 		

@@ -26,11 +26,27 @@ app.listen(port, function() {
 
 app.use('/', routes);  // home page
 
-module.exports = app;
+//THIS LISTENS TO THE PORT AND SERVES THE HOMEPAGE
+//I've included it here instead of as a separate file so I can pass the current image's file name to index.jade (because it could be .gif, .jpg, .png...)
+var express = require("express");
+var router = express.Router();
+var imageFileName = "pixabay.jpg";  // the vast majority of files seem to be .jpg, so use that as a default assumption in case program needs restarted
+
+/* GET the app's home page */
+router.get('/',indexpage);
+
+function indexpage(req, res) {
+	// this code passes variables to index.jade
+	//console.log(req.body);
+	res.render('index',userData);
+}
+
+module.exports = router;
 
 
 /*
  * THIS CODE MANAGES THE TWITTERBOT
+ * also stores some values to pass to homepagea
  */ 
 // skeleton cadged from https://www.npmjs.com/package/twitter
 var Twitter = require('twitter');
@@ -51,6 +67,7 @@ var testURL = "";
 var suffix = "";
 var targetLocation = "";
 var creditString = "";
+var userData = { 'image':imageFileName, 'profileUrl':'http://minneapolis.edu' };
 var fiveMinutes = 5 * 60 * 1000;
 var twelveHours = 12 * 60 * 60 * 1000;
 
@@ -65,7 +82,8 @@ function getAndPost() {
 			// need to decide where to save the image.
 			// NB: not cleaning this up, so that it can be grabbed and used if I set up an info page.
 			suffix = testURL.substring(testURL.lastIndexOf("."));
-			targetLocation = "static/pixabay" + suffix;
+			imageFileName = "pixabay" + suffix;
+			targetLocation = "static/" + imageFileName;
 
 			// download image and save to target location
 			download(testURL, targetLocation, function(){
@@ -154,12 +172,15 @@ function getNewImage(callback) {
 
 				// also credit the user who uploaded the image
 				var userName = imageJSON.user;
-				//var userID = imageJSON.user_id;
+				var userID = imageJSON.user_id;
 				var fullSizeImageUrl = imageJSON.webformatURL;
-				//var profileURL = "https://pixabay.com/en/users/" + userName + "-" + userID;
+				var profileURL = "https://pixabay.com/en/users/" + userName + "-" + userID;
 				creditString = "Uploaded by Pixabay user " + userName + ".  "
 				creditString += "Full size image at: " + fullSizeImageUrl;
-
+				
+				//create some JSON attributes I can pass to the web page
+				userData = { 'image':imageFileName, 'profileUrl':profileURL, 'fullImageUrl':fullSizeImageUrl, 'userName':userName };
+				console.log(userData);
 				// and here's where we do the callback function - we don't want to bother with callback if there are any errors.
 				callback();
 			}
