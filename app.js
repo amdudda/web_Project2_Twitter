@@ -67,7 +67,7 @@ var testURL = "";
 var suffix = "";
 var targetLocation = "";
 var creditString = "";
-var userData = { 'image':imageFileName, 'profileUrl':'http://minneapolis.edu' };
+var userData = { 'image':imageFileName } //, 'profileUrl':'http://minneapolis.edu' };
 var fiveMinutes = 5 * 60 * 1000;
 var twelveHours = 12 * 60 * 60 * 1000;
 
