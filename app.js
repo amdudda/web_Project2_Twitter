@@ -53,16 +53,19 @@ var suffix = "";
 var targetLocation = "";
 var creditString = "";
 var userData = ""; 
-var fiveMinutes = 5 * 60 * 1000;
+//var fiveMinutes = 5 * 60 * 1000;  // for debugging/testing
 var twelveHours = 12 * 60 * 60 * 1000;
 
+// this kicks off the timer so that the app automatically fetches and posts an image every 12 hours.
 setInterval(getAndPost, twelveHours);
 
 function getAndPost() {
 	getNewImage(
 
-		// use function from StackOverflow and use callback to post the data when
-		// I have it.
+		/*
+		 * use function from StackOverflow and use
+		 * callback to post the data when I have it.  
+		 */
 		function () {
 			// need to decide where to save the image.
 			// NB: not cleaning this up, so that it can be grabbed and used if I set up an info page.
@@ -92,6 +95,7 @@ function getAndPost() {
  * http://stackoverflow.com/questions/12740659/downloading-images-with-node-js
  */
 
+// function to dowload and save an image
 var download = function(uri, filename, callback){
   request.head(uri, function(err, res, body){
     // console.log('content-type:', res.headers['content-type']);
@@ -106,7 +110,7 @@ function PostToTwitter(type, contents){
 
 	client.post(type, contents, function(error, media, response){
 
-		  if (!error) {
+		if (!error) {
 
 			// If successful, a media object will be returned.
 			//console.log(creditString);
@@ -118,15 +122,15 @@ function PostToTwitter(type, contents){
 			}
 
 			client.post('statuses/update', status, function(error, tweet, response){
-			  if (!error) {
-				var currentTimestamp = new Date();
-				console.log("Posted image at " + currentTimestamp + "!");
-				//console.log(tweet);
-			  }
+				if (!error) {
+					var currentTimestamp = new Date();
+					console.log("Posted image at " + currentTimestamp + "!");
+					//console.log(tweet);
+				}
 			});
 
-		  }
-		});
+		}
+	});
 
 }
 
