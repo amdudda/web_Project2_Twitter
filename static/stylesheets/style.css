@@ -1,0 +1,21 @@
+body {
+	color: floralwhite;
+	background: darkviolet;
+}
+
+a:link {
+	color: #a6fe0e;
+	font-weight: bold;
+}
+
+a:hover {
+	color: floralwhite;
+}
+
+a:active {
+	color: #6eae00;
+}
+
+a:visited {
+	color: floralwhite;
+}
