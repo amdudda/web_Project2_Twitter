@@ -6,6 +6,7 @@ var fullSize = savedData.fullImageUrl;
 var smallSize = savedData.image;
 var profUrl = savedData.profileUrl;
 var user = savedData.userName;
+var postedDate = savedData.timestamp;
 
 var curTag = document.getElementById('fullPicUrl');
 curTag.setAttribute('href', fullSize);
@@ -16,3 +17,6 @@ curTag.setAttribute('src', smallSize);
 curTag = document.getElementById('credit');
 curTag.setAttribute('href', profUrl);
 curTag.innerText = user;
+
+curTag = document.getElementById('credit');
+curTag.innerText = postedDate;
