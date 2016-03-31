@@ -53,11 +53,15 @@ var suffix = "";
 var targetLocation = "";
 var creditString = "";
 var userData = ""; 
+//var imageFileName="";
 //var fiveMinutes = 5 * 60 * 1000;  // for debugging/testing
 var twelveHours = 12 * 60 * 60 * 1000;
 
 // this kicks off the timer so that the app automatically fetches and posts an image every 12 hours.
-setInterval(getAndPost, twelveHours);
+//setInterval(getAndPost, twelveHours);
+// or just run it once for testing purposes:
+getAndPost();
+
 
 function getAndPost() {
 	getNewImage(
@@ -72,6 +76,8 @@ function getAndPost() {
 			suffix = testURL.substring(testURL.lastIndexOf("."));
 			imageFileName = "pixabay" + suffix;
 			targetLocation = "static/" + imageFileName;
+			// and add the image info to userData.
+			userData.image = imageFileName;
 
 			// download image and save to target location
 			download(testURL, targetLocation, function(){
@@ -179,7 +185,7 @@ function getNewImage(callback) {
 				creditString += "Full size image at: " + fullSizeImageUrl;
 				
 				//create some JSON attributes I can pass to the web page
-				userData = { 'image':imageFileName, 'profileUrl':profileURL, 'fullImageUrl':fullSizeImageUrl, 'userName':userName };
+				userData = { 'profileUrl':profileURL, 'fullImageUrl':fullSizeImageUrl, 'userName':userName };
 				
 				// and here's where we do the callback function - we don't want to bother with callback if there are any errors.
 				callback();

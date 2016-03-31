@@ -18,5 +18,5 @@ curTag = document.getElementById('credit');
 curTag.setAttribute('href', profUrl);
 curTag.innerText = user;
 
-curTag = document.getElementById('credit');
+curTag = document.getElementById('postedAt');
 curTag.innerText = postedDate;
