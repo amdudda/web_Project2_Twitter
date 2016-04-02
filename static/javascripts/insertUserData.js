@@ -1,3 +1,8 @@
+
+var fs = require('fs');
+var key = process.env.TWIT_CONSUMER_KEY;
+console.log(key);
+
 // parses userData.js and inserts into relevant places on homepage
 // get the JSON data from userData.js, which will have already been loaded by index.jade
 var savedData = userData;
