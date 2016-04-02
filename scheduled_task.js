@@ -108,6 +108,7 @@ function PostToTwitter(type, contents){
 				// write the contents of userData to a js file so it's persistent across reboots
 				// used http://www.c-sharpcorner.com/UploadFile/dacca2/node-js-in-action-create-simple-text-file-in-node-js-using/ as a guide
 				var dataToWrite = "var userData=" + JSON.stringify(userData);
+				process.env.LAST_TWEET = JSON.stringify(userData);
 				fs.writeFile('static/javascripts/userData.js',dataToWrite, function (err) {
 							if (err) throw err;
 							console.log('Saved latest userdata.'); 
