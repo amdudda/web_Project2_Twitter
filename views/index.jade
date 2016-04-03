@@ -8,7 +8,7 @@ html
 	body
 		h1 We Got Monsters!
 		p Welcome to the We Got Monsters homepage.
-		|<p> This site checks Pixabay twice a day for images tagged "monsters", selects a random image, and posts it to the <a href="https://twitter.com/We_Got_Monsters">@We_Got_Monsters</a> account on Twitter.  The most recently tweeted image is shown below.</p>
+		|<p> This site checks Pixabay twice a day for images tagged "monsters", selects a random image, and posts it to the <a href="https://twitter.com/We_Got_Monsters">@We_Got_Monsters</a> account on Twitter.  <strike>The most recently tweeted image is shown below.</i> Unfortunately, Heroku's filesystem is ephemeral, so this image is almost always whatever my last test Tweet was.</p>
 
 		a(href="" id="fullPicUrl")
 			img(src="" id="smallImage")
@@ -16,5 +16,10 @@ html
 			a(href="" id="credit") (Unable to retrieve info to credit the image creator.)
 		p Posted to Twitter on 
 			span(id="postedAt")
+
+		hr
+		p If you wish, you may
+			a(href="mailto:tk0654wm@go.minneapolis.edu")contact me by email. 
+			
 
 		script(src='javascripts/insertUserData.js')
